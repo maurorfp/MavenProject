@@ -1,6 +1,7 @@
 package io.altar.jseproject.business;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import io.altar.jseproject.models.Shelf;
@@ -50,5 +51,11 @@ public class ShelfBusiness implements ShelfBusinessInterface{
 		return DBS.getAllIds();
 	}
 
+	//funcao para fazer o update das shelfs e verificar se existe prateleiras para  colocar o produtos
+	public void updateProductOnShelfs(List<Long> shelfsIds, Long id) {
+	for (List<Long> shelfsIds 
+		
+		
+	}	
 
 }

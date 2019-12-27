@@ -1,5 +1,6 @@
 package io.altar.jseproject.controlers;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -14,18 +15,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import io.altar.jseproject.business.ProductBusiness;
+import io.altar.jseproject.business.ShelfBusiness;
 import io.altar.jseproject.models.Product;
+import io.altar.jseproject.models.Shelf;
 
-@Path("products")
-public class ProductControler {
-
-	//forma de chamar os metodos associados ao product business
-	ProductBusiness productBusiness = new ProductBusiness();
-
+@Path("shelfs")
+public class ShelfControler {
+	
+//forma de chamar os metodos associados ao product business
+	ShelfBusiness shelfBusiness = new ShelfBusiness();
+	
 	@Context
 	protected UriInfo context;
-
+	
 	@GET
 	@Path("status")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -34,39 +36,49 @@ public class ProductControler {
 	public String status() {
 		return "Url :" + context.getRequestUri().toString() + " is ok";
 	}
-
+	
+	//criar a shelf//
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 
-	public Product create(Product product) {
-		productBusiness.create(product);
-		return product;
+	public Shelf create(Shelf shelf) {
+		shelfBusiness.create(shelf);
+		return shelf;
 	}
-
+	
+	//consultar os ids das shelf
 	@GET
+	@Path("/allIds")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	
 	public Set<Long>  read() {
-		return productBusiness.getAllIds();
+		return shelfBusiness.getAllIds();
 	}
 	
-	
+	//editar a prateleira
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Product update(@PathParam("id")Long id, Product product) {
-		productBusiness.editId(product);
-		return product;
+	public Shelf update(@PathParam("id")Long id, Shelf shelf) {
+		shelfBusiness.editId(shelf);
+		return shelf;
 	}
 	
-	
+	// eliminar a prateleira
 	@DELETE
 	@Path("{id}")
 	public void delete(@PathParam("id") Long id) {
-		productBusiness.delete(id);
+		shelfBusiness.delete(id);
 	}
-
+	
+	//consultar
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection <Shelf>  consultar() {
+		return shelfBusiness.consultar();
+	}
 }
