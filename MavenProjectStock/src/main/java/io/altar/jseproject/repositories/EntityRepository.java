@@ -12,11 +12,11 @@ public abstract class EntityRepository <T extends Entity>  {
 //Cria uma metodo hash map para identificar todos os elementos da base de dados
 	Map<Long, T> myMap = new HashMap<Long, T>();
 	
-	long nextId= 1;
+	private long currentID = 1;
 
 	public long create(T entity){
-		entity.setId(nextId++);
 		myMap.put(entity.getId(), entity);
+		entity.setId(currentID ++);
 		return entity.getId();
 	}
 	
