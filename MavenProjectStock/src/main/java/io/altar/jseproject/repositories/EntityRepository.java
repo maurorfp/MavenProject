@@ -15,8 +15,8 @@ public abstract class EntityRepository <T extends Entity>  {
 	private long currentID = 1;
 
 	public long create(T entity){
-		myMap.put(entity.getId(), entity);
 		entity.setId(currentID ++);
+		myMap.put(entity.getId(), entity);
 		return entity.getId();
 	}
 	

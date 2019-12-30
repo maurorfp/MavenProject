@@ -9,7 +9,7 @@ public abstract interface  BusinessInterface<T extends Entity> {
 	
 //metodos genericos a implementar provenientes do entity e genericas em todas as classes// - e um interface so define a regas que as classe que extende devem implementar
 
-	void create (T t);
+	long create (T t);
 
 	//consultar sem criterio o tipo objecto - nao leva parametros de entrada porque queremos todos	
 	Collection<T> consultar();

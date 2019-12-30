@@ -10,10 +10,11 @@ import io.altar.jseproject.repositories.ShelfRepository;
 
 public class ShelfBusiness implements ShelfBusinessInterface{
 	public ShelfRepository DBS = ShelfRepository.getInstance();
+	static final ProductBusiness PB = new ProductBusiness();
 
 	@Override
-	public void create(Shelf t) {
-		DBS.create(t);
+	public long create(Shelf t) {
+		return DBS.create(t);
 		
 	}
 
@@ -38,7 +39,7 @@ public class ShelfBusiness implements ShelfBusinessInterface{
 	public void delete(Long id) {
 		Shelf shelfToRemove = DBS.consultarId(id);
 		if(shelfToRemove.getProductId()!=0) {
-			ProductBusiness.updateShelfOnProduct(shelfToRemove.getProductId(),id); /// erro??
+			PB.updateShelfOnProduct(shelfToRemove.getProductId(),id); /// erro??
 		}
 		DBS.delete(id);
 		
@@ -72,9 +73,10 @@ public class ShelfBusiness implements ShelfBusinessInterface{
 			DBS.editId(shelf);
 		}
 	}
+	}
 	
-	//nao sei o que acontece aqui?? Deduzo que obete uma lista de IDs de prateleiras de producto selecionado
-	}	
+	//lista de IDs de prateleiras de producto selecionado
+		
 	public List<Long> getShelfIdsByProductId(long productId) {
 		Collection<Shelf> values = DBS.consultar();
 		List<Long> result = values.stream()

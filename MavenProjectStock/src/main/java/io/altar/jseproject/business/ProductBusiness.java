@@ -10,15 +10,13 @@ import io.altar.jseproject.repositories.ProductRepository;
 
 public class ProductBusiness implements ProductBusinessInterface{
 	public ProductRepository DBP= ProductRepository.getInstance();
-	
+	static final ShelfBusiness SB = new ShelfBusiness();
 	
 	@Override
-	
-	//esta definido como VOID nao permite ter return! Tenho que implementar o EntitiyBusiness e EntiteyBusiness interfacce??
-	public void create(Product product) {
+	public long create(Product product) {
 		long currentId = DBP.create(product);
 		if(product.getShelvesIds().size()>0) {
-			ShelfBusiness.updateProductOnShelfs(currentId, new ArrayList<Long>(),product.getShelvesIds());
+			SB.updateProductOnShelfs(currentId, new ArrayList<Long>(),product.getShelvesIds());
 		}
 		return currentId;
 		
@@ -37,23 +35,29 @@ public class ProductBusiness implements ProductBusinessInterface{
 	}
 
 	
-	//continuo com o mesmo erro do static?? - tenho que implementar o EntityBusiness
 	@Override
 	public void editId(Product product) {
 		Product oldProduct = DBP.consultarId(product.getId());
 		if(!oldProduct.getShelvesIds().equals(product.getShelvesIds())) {
-			ShelfBusiness.updateProductOnShelfs(product.getId(),oldProduct.getShelvesIds(),product.getShelvesIds());
+			SB.updateProductOnShelfs(product.getId(),oldProduct.getShelvesIds(),product.getShelvesIds());
 		}
 		DBP.editId(product);
 		
 	}
-	//mesmo problema do static
+	
 	@Override
+// validar o Id inserido para deletar -  enviar exception mensage de id errado.
 	public void delete(Long id) {
 		Product product= DBP.consultarId(id);
+		
+		if (product == null) {
+			
+			throw new RuntimeException("insira um id valido");
+		}
+		
 		DBP.delete(id);
 //aqui e que vai ficar o delete dos ids dos produtos nas shelfs onde estao. AINDA FALTA FAZER??//		
-		ShelfBusiness.updateProductOnShelfs(product.getId(),product.getShelvesIds(),new ArrayList<Long>());
+		SB.updateProductOnShelfs(product.getId(),product.getShelvesIds(),new ArrayList<Long>());
 	}
 
 	@Override
@@ -78,6 +82,8 @@ public class ProductBusiness implements ProductBusinessInterface{
 	
 	public List<Long> getShelfIdsByProductId(long productId) {
 
-		return ShelfBusiness.getShelfIdsByProductId(productId);
+		return SB.getShelfIdsByProductId(productId);
 	}
 }
+//caminho directo para o Git do Joao
+//https://github.com/Joaoscortes/upacademyJavaStarterExamples/commit/23d098c5e0466d8ade0f9fa30e6389a3372b6283
