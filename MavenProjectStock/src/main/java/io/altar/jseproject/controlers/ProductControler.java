@@ -70,11 +70,16 @@ public class ProductControler {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Product update(@PathParam("id")Long id, Product product) {
+	public Response update(@PathParam("id")Long id, Product product) {
+	//exception de ID valido para fazer o edit - dar os ids existentes
+		try {
 		productBusiness.editId(product);
-		return product;
+		return Response.ok().build();
 	}
-	
+		catch (RuntimeException e) {
+			return Response.status(400).entity(e.getMessage()).build(); 
+		}
+	}
 	
 	@DELETE
 	@Path("{id}")
