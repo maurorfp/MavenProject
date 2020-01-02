@@ -15,11 +15,20 @@ public class ProductBusiness implements ProductBusinessInterface{
 	@Override
 	public long create(Product product) {
 // validar os valores de IVA (6,13,23), validar o desconto (0-100)//
+		if (product.getIva()!= 6 && product.getIva()!= 13 && product.getIva()!= 23) {
+		
+			throw new RuntimeException("insira um IVA valido");
+		}
+		
+		if (product.getDiscount()>1 && product.getDiscount()<100) {
+			
+			throw new RuntimeException("insira um valor de desconto entre 1 e  100");
+			
+		}
 		long currentId = DBP.create(product);
 		if(product.getShelvesIds().size()>0) {
 			SB.updateProductOnShelfs(currentId, new ArrayList<Long>(),product.getShelvesIds());
 		}
-		if (product.getIva()!= 6 && product.getIva()!= 13 &&product.getIva()!= 23) {
 		return currentId;
 		
 	}

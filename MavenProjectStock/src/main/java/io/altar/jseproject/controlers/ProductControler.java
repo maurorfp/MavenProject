@@ -42,9 +42,18 @@ public class ProductControler {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 
-	public Product create(Product product) {
+	public Response create(Product product) {
+	//check a validacao dos campos de criacao do produto, neste caso o IVA
+		try {
 		productBusiness.create(product);
-		return product;
+		return Response.ok().build();
+		
+		}
+		
+		catch (RuntimeException e) {
+				return Response.status(400).entity(e.getMessage()).build(); 
+		}
+		
 	}
 // o resultado do post
 	@GET
@@ -71,6 +80,7 @@ public class ProductControler {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id")Long id, Product product) {
+		
 	//exception de ID valido para fazer o edit - dar os ids existentes
 		try {
 		productBusiness.editId(product);
@@ -81,6 +91,7 @@ public class ProductControler {
 		}
 	}
 	
+	// execption para o delete que e igual ao edit
 	@DELETE
 	@Path("{id}")
 	public Response delete(@PathParam("id") Long id) {
@@ -91,13 +102,7 @@ public class ProductControler {
 		
 		catch (RuntimeException e) {
 			return Response.status(400).entity(e.getMessage()).build(); 
-		}
-		
-		
-	
-	
-	
-		
+		}	
 		
 	}
 	
