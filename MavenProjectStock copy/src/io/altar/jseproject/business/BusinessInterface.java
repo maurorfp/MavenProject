@@ -5,12 +5,11 @@ import java.util.Set;
 
 import io.altar.jseproject.models.Entity;
 
-public interface  BusinessInterface<T extends Entity> {
-//o nome desta class deveria ser entety
+public abstract interface  BusinessInterface<T extends Entity> {
 	
 //metodos genericos a implementar provenientes do entity e genericas em todas as classes// - e um interface so define a regas que as classe que extende devem implementar
 
-	long create (T t);
+	void create (T t);
 
 	//consultar sem criterio o tipo objecto - nao leva parametros de entrada porque queremos todos	
 	Collection<T> consultar();

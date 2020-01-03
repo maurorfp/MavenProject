@@ -3,9 +3,9 @@ package io.altar.jseproject.business;
 import java.util.Collection;
 import java.util.Set;
 
-import io.altar.jseproject.models.Entity;
+import io.altar.jseproject.models.Entity_;
 
-public interface  BusinessInterface<T extends Entity> {
+public interface  BusinessInterface<T extends Entity_> {
 //o nome desta class deveria ser entety
 	
 //metodos genericos a implementar provenientes do entity e genericas em todas as classes// - e um interface so define a regas que as classe que extende devem implementar
