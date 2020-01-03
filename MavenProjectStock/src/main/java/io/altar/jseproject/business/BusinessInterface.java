@@ -6,6 +6,7 @@ import java.util.Set;
 import io.altar.jseproject.models.Entity;
 
 public abstract interface  BusinessInterface<T extends Entity> {
+//o nome desta class deveria ser entety
 	
 //metodos genericos a implementar provenientes do entity e genericas em todas as classes// - e um interface so define a regas que as classe que extende devem implementar
 
